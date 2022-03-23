@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}
+    registration
+{% endblock %}
+{% block css_block %}
+    <style>
+    .re{
+        width: 100% ;
+        padding:20px;
+        margin: auto;
+    }
+   h4{
+       color: black;
+       text-align: center;
+       padding: 10px;
+   }
+    </style>
+{% endblock%}
+{% block body_block %}
+         <h4>Registration</h4>
+        <div class="re">
+         <form method="POST" enctype="multipart/form-data">
+            {{ form|crispy }}
+            {% csrf_token %}
+            <br>
+            <button type="submit" class="btn btn-sm btn-primary" style="width:50%; margin-left:300px">Sign Up</button>
+          </form>
+        </div>
+        <br>
+
+{% endblock %}
+

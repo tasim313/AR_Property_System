@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}
+    Add flats
+{% endblock %}
+{% block css_block %}
+   <style>
+   .flat{
+       width: 80%;
+       margin:auto;
+   }
+    h4{
+       color: black;
+       text-align: center;
+       padding: 10px;
+   }
+   </style>
+{% endblock %}
+{% block body_block %}
+    <h4>Add Flat</h4>
+    <div class="flat">
+     <form method="POST" enctype="multipart/form-data">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-sm btn-primary" style="width:50%; margin-left:300px; margin-bottom: 30px">Publish</button>
+   </form>
+    </div>
+{% endblock %}
