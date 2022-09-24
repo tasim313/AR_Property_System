@@ -33,6 +33,7 @@ class CreateUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class CreateUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, max_length=100)
     is_renter = models.BooleanField('is_renter', default=False)
@@ -40,11 +41,13 @@ class CreateUser(AbstractBaseUser, PermissionsMixin):
     is_owner = models.BooleanField('is_owner', default=False)
     is_active = models.BooleanField(default=True)
 
+
     objects = CreateUserManager()
     USERNAME_FIELD = 'email'
 
     def __str__(self):
         return self.email
+
 
 class user_registration(models.Model):
     user = models.OneToOneField(CreateUser, related_name='user_profile', on_delete=models.CASCADE)

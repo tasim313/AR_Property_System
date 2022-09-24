@@ -1,6 +1,69 @@
 {% extends 'base.html' %}
 {% block title_block %}
 {% endblock %}
+{% block css_block %}
+     <style>
+      .card-img-top {
+        width: 80%;
+        height: 80%;
+        object-fit: cover;
+        }
+        .cardhover{
+            transition: 3s;
+        }
+        .cardhover:hover{
+
+            background: var(bg-primary-color);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.24);
+            transform: scale(1.05);
+        }
+        .icontext{
+            font-size: 15px;
+            font-style: bold;
+            color: rgb(20, 102, 84);
+        }
+     </style>
+{% endblock %}
 {% block body_block %}
-    <h1>Hi homepage</h1>
+
+    <h2 class="my-5">Featured Products</h2>
+      {% for product in object_list %}
+         <section>
+        <div class="container">
+            <div class="cardhover card mb-7" style="max-width: 800px;">
+                <div class="row g-0">
+                  <div class="col-md-7">
+                  <a href="{% url 'App_Add_Flat:product_details' pk=product.pk %}"> <img src="/media/{{ product.Flat_image }}" class="img-fluid rounded-start card-img-top" alt="..."></a>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="card-body ">
+                      <h5 class="card-title "> {{ product.Bedroom }} Bad Rooms </h5>
+                      <p class="card-text ">{{ product.Description }}</p>
+                      <p class="card-text ">
+                          <div>
+                            <small class="language">{{ product.Flat_number }}</small>
+                            <small class="language">{{ product.House_rent }}</small>
+                            <small class="language">AR Property ID -254658</small>
+                          </div>
+                      </p>
+                        &nbsp &nbsp
+                       <a href="#" class="fa-solid fa-bed">
+                        </a>
+                        <small class="icontext">{{ product.Bedroom }}Bad</small>
+
+                        <a href="#"class="fa-solid fa-bath"></a>
+                        <small class="icontext">{{ product.Number_of_bath }} Bath</small>
+                         <br>
+
+                      <a href="#" class="btn btn-primary ml-2"><i class="fa-solid fa-phone"></i> Call</a>
+                      <span class=""><a href="#" class="btn btn-primary"><i class="fa-solid fa-envelope-circle-check"></i> Rent</a></span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+     {% endfor %}
+
 {% endblock %}

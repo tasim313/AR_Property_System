@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -7,15 +8,12 @@ from django.contrib.auth import authenticate, login, logout
 # import form and model
 
 from App_Login.models import CreateUser, user_registration
+from App_Add_Flat.models import Category, Add_Flat
 from App_Login.forms import CreatUserForm, LoginForm, User_Registration_Form
 
 # Messages
 from django.contrib import messages
 # Create your views here.
-def home(request):
-    return render(request, 'home.html', context={})
-
-
 def signup(request):
     form = CreatUserForm()
     register = False
@@ -42,15 +40,15 @@ def login_user(request):
             if user is not None and user.is_staff:
                 login(request, user)
                 messages.success(request, 'Successfully Login')
-                return HttpResponseRedirect(reverse('App_Login:home'))
+                return HttpResponseRedirect(reverse('home'))
             elif user is not None and user.is_renter:
                 login(request, user)
                 messages.success(request, 'Successfully Login')
-                return HttpResponseRedirect(reverse('App_Login:home'))
+                return HttpResponseRedirect(reverse('home'))
             elif user is not None and user.is_owner:
                 login(request, user)
                 messages.success(request, 'Successfully Login')
-                return HttpResponseRedirect(reverse('App_Login:home'))
+                return HttpResponseRedirect(reverse('home'))
       return render(request, 'App_Login/login.html', context={'form': form})
 
 
@@ -71,7 +69,24 @@ def registrationform(request):
             form.save(commit=True)
             form = User_Registration_Form(instance=current_user)
             messages.success(request, 'Successfully registration')
-            return HttpResponseRedirect(reverse('App_Login:home'))
+            return HttpResponseRedirect(reverse('home'))
     diction = {'form': form}
     return render(request, 'App_Login/registration.html', context=diction)
+
+
+@login_required
+def User_profile(request):
+    return render(request, 'App_Login/user_profile.html', context={})
+
+
+def searchbar(request):
+    if request.method == 'GET':
+        search = request.GET.get('query', '')
+        rent = Add_Flat.objects.filter(House_rent__icontains=search)
+        #b#edroom = Add_Flat.objects.filter(Bedroom__icontains=search)
+       # square_feet = Add_Flat.objects.filter(Square_feet__icontains=search)
+        #result = bedroom.union(rent, square_feet)
+        result = Add_Flat.objects.filter(Bedroom__contains=search)
+    return render(request, 'App_Login/search.html', context={'result': result, 'search':search})
+
 

@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+
 class Category(models.Model):
     title = models.CharField(max_length=400, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,15 +31,20 @@ class Add_Flat(models.Model):
     Created_at = models.DateTimeField(auto_now_add=True)
     Updated_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
         return self.House_name + str(self.Flat_number)
 
     class Meta:
         ordering = ['-Created_at']
 
+
+
+
 class Update_Rent(models.Model):
     House_rent = models.FloatField(blank=True, null=True)
     Utility_bill = models.FloatField(blank=True, null=True)
+
 
 class Notification(models.Model):
     pass

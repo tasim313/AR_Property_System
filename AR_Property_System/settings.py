@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,9 +43,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+# Third pirty package to install
     'crispy_forms',
+    'fontawesomefree',
+# create own app
     'App_Login',
     'App_Add_Flat',
+    'App_About',
+    'App_Flat_Booking',
+    'App_Feedback',
+    'App_Payment',
+    'djoser',
+    'djstripe',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -82,14 +96,12 @@ WSGI_APPLICATION = 'AR_Property_System.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ar_property_system',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -136,3 +148,10 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'App_Login.CreateUser'
+
+
+STRIPE_TEST_PUBLIC_KEY = 'pk_test_51LidbNDQm8XEtv8jYZGzTUSHAroofDZ8jJKJHZrboZTv1Fgr29lmJsxVlR2L9sGyK9MvDULukE0CtUK6dE3pkxsx00hrdKsW3z'
+STRIPE_TEST_SECRET_KEY = 'sk_test_51LidbNDQm8XEtv8jiZFRqwF11EvuI7hCQb6mzH5UWD3YcnTfyTKVPjEnWG66HGImHeBppkdeJ0mB0zDfjRMwXGuQ00hHg6thVm'
+STRIPE_LIVE_MODE = False
+DJSTRIPE_WEBHOOK_SECRET = "whsec_xxx"
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
