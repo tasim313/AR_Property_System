@@ -1,0 +1,34 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}
+    user profile
+{% endblock %}
+{% block css_block %}
+
+{% endblock %}
+{% block body_block %}
+
+    <div class="row">
+  <div class="col-sm-4">
+      {% if user.user_profile %}
+        <img src="/media/{{ user.user_profile.User_image }}" width="250px" height="250px" class="rounded-circle">
+      {% else %}
+         <img src="/media/man.jpg" width="250px" height="250px" class="rounded-circle">
+      {% endif %}
+  </div>
+
+  <div class="col-sm-8">
+
+       <h4>{{ user.user_profile.Full_name }}</h4>
+       <h5>{{ user.user_profile.User_email }}</h5>
+       <h5>{{ user.user_profile.User_phone }}</h5>
+       <h5>{{ user.user_profile.Address }}</h5>
+      <h5>{{ user.user_profile.Created_at }}</h5>
+
+    <br>
+  </div>
+</div>
+<hr>
+<br>
+<br>
+{% endblock %}

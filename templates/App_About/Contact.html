@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% block title_block %}
+    Emergency Contact
+{% endblock %}
+
+{% block css_block %}
+    <style>
+
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+        }
+        hr{
+            width: 80%;
+        }
+        h2{
+            font-size: 20px;
+        }
+        .contact-items{
+            display: flex;
+            margin: 30px auto;
+            flex-wrap: wrap;
+            align-items: center;
+
+        }
+        .customer-care,.write-us,.sales-market{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 28%;
+            margin: 30px auto;
+            padding: 35px 15px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 250px;
+
+        }
+        .customer-care{
+            height: 250px;
+            box-shadow: 0 15px 15px darkgrey;
+            border: 1px solid rgba(61, 61, 61, 0.603);
+            transition: 2s;
+        }
+        .write-us{
+            height: 250px;
+            box-shadow: 0 15px 15px darkgrey;
+            border: 1px solid rgba(112, 50, 50, 0.507);
+            transition: 2s;
+        }
+        .sales-market{
+            height: 250px;
+            box-shadow: 0 15px 15px darkgrey;
+            border: 1px solid rgba(85, 85, 146, 0.452);
+            transition: 2s;
+        }
+        p{
+            font-size: 15px;
+        }
+        button{
+            padding: 8px 16px;
+            font-size: 19px;
+            border-radius: 13px;
+            border: none;
+            margin: 15px auto;
+            cursor: pointer;
+            color: rgb(255, 255, 255);
+        }
+        button:hover{
+            color: gray;
+        }
+        .customer-care{
+
+            box-shadow: 0 0 5px #F5F5F5;
+        }
+        .write-us{
+
+            box-shadow: 0 0 5px #F5F5F5;
+        }
+        .sales-market{
+
+            box-shadow: 0 0 5px #F5F5F5;
+        }
+        a{
+            font-size: 16px;
+        }
+        .customer-care a{
+            color: green;
+            text-shadow: 0 0 2px rgba(73, 129, 80, 0.637);
+        }
+        .sales-market a{
+            color: blue;
+            text-shadow: 0 0 2px rgba(76, 62, 158, 0.637);
+        }
+        .h1color{
+            padding: 20px;
+            text-align: center;
+            background-color: #212529;
+            color: white;
+            border-radius: 10px;
+            width: 500px;
+            margin: auto;
+
+        }
+        .customer-care:hover{
+            transform: scale(1.1);
+            box-shadow: 0 15px 15px #DDDDDD;
+            z-index: 2;
+        }
+        .write-us:hover{
+            transform: scale(1.1);
+            box-shadow: 0 15px 15px #DDDDDD;
+            z-index: 2;
+        }
+        .sales-market:hover{
+            transform: scale(1.1);
+            box-shadow: 0 15px 15px #DDDDDD;
+            z-index: 2;
+        }
+        #cust-care{
+            background: #212529;
+            color: white;
+
+        }
+        #write{
+            background: #212529;
+            color: white;
+
+
+        }
+        #sales{
+            background: #212529;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block  body_block%}
+     <div class="h1color">
+        <h1 >Contact Us</h1>
+    </div>
+    <div class="container">
+        <hr>
+        <h2>Have any questions? We'd love to hear from you</h2>
+        <div class="contact-items">
+            <div class="customer-care">
+                <h3>Customer Care</h3>
+                <p>Our Support team is spread all over the world to give you fast response</p>
+
+                <h2><a href="#"><button id="cust-care">017***848458</button></a></h2>
+            </div>
+
+            <div class="write-us">
+                <h3>Write Us</h3>
+                <p> You can write us if you have any queries and if you need help.</p>
+              <h2> <a href="#"> <button id="write">Write a from </button></a> </h2>
+            </div>
+            <div class="sales-market">
+                <h3> Email Us</h3>
+                <p>Get in touch with our sales and marketing team or email us for any information</p>
+                <h2> <a href="#"><button id="sales">Arpropertybd@gmail.com</button></a> </h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

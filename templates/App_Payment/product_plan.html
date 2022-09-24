@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<div class="content">
+    <div class="intro-y flex items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto mb-2">
+            Pricing
+        </h2>
+    </div>
+
+    <div class="col-span-12 lg:col-span-8 xxl:col-span-9">
+        <!-- BEGIN: Change Password -->
+        <div class="intro-y flex justify-center box">
+            <!-- BEGIN: Pricing Layout -->
+            <div class="intro-y box flex flex-col lg:flex-row">
+                <div class="intro-y flex-1 px-5 py-10">
+                    <div class="text-xl font-medium text-center mt-5 mb-5">Your Current Plan</div>
+                    <i data-feather="check-circle" class="w-12 h-12 text-theme-1 dark:text-theme-10 mx-auto"></i>
+                    <div class="text-xl font-medium text-center mt-10" id="plan_name"></div>
+                    <div class="text-gray-700 dark:text-gray-600 text-center mt-5">
+                        <div id="plan_specification">
+                            <!-- here is specification -->
+
+                        </div>
+                        <div class="text-gray-600 dark:text-gray-400 px-10 text-center mx-auto mt-2" id="description">
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Pricing Layout -->
+            </div>
+            <!-- END: Change Password -->
+        </div>
+
+
+        <!-- BEGIN: Pricing Layout -->
+        <div class="text-xl font-medium text-center mt-5 mb-5">Available Plans</div>
+
+        <div class="intro-y box flex flex-col lg:flex-row mt-5">
+            <!-- striting price plan here -->
+            {% for product in active_products %}
+            <!-- <p>{{product}}</p> -->
+            <div class="intro-y flex-1 px-5 py-16">
+                {% if 'Free' in product.name %}
+                <i data-feather="credit-card" class="w-12 h-12 text-theme-1 dark:text-theme-10 mx-auto"></i>
+                {% endif %}
+                {% if 'Basic' in product.name %}
+                <i data-feather="credit-card" class="w-12 h-12 text-theme-1 dark:text-theme-10 mx-auto"></i>
+                {% endif %}
+                {% if 'Enterprise' in product.name %}
+                <i data-feather="briefcase" class="w-12 h-12 text-theme-1 dark:text-theme-10 mx-auto"></i>
+                {% endif %}
+                {% if 'Premium' in product.name %}
+                <i data-feather="send" class="w-12 h-12 text-theme-1 dark:text-theme-10 mx-auto"></i>
+                {% endif %}
+                <div class="text-xl font-medium text-center mt-10" id="plan_name">{{product.name}}</div>
+                <div class="text-gray-700 dark:text-gray-600 text-center mt-5"></div>
+
+                <div class="text-gray-700 dark:text-gray-600 mt-5">
+                    <ul>
+                    {% for key, values in product.metadata.items %}
+                        {% if key != 'counter' %}
+                    <li class="box text-center py-1">{{values|title}} {% if key == 'dynamic_equation' %} Pricing Equation{% if values == '1' %}{% else %}s{% endif %} {% else %} {{key|title }}{% if values == '1' %}{% else %}s{% endif %} {% endif %}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+
+                </div>
+                <div class="text-gray-600 dark:text-gray-400 px-10 text-center mx-auto mt-2">
+                    {% if product.description %}
+                    {{product.description|capfirst }}
+                    {% else %}
+                    {% endif %}
+                </div>
+                {% for price in product.prices %}
+                <div class="flex justify-center">
+                    <div class="relative text-5xl font-semibold mt-8 mx-auto" id="price">
+                        {% if price.unit_amount == 0 %}
+                        Free
+                        {% else %}
+                        {{price.unit_amount|cut:"00"}}
+                        {% endif %}
+
+                        <span class="absolute text-xl top-0 right-0 text-gray-500 -mr-4 mt-1">$</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs text-center uppercase">
+                        {{price.recurring.interval}}ly
+                    </p>
+                </div>
+                <div class="flex justify-center">
+                    <a type="button"
+                        class="purchaseBtn button button--lg text-white bg-theme-1 rounded-full mx-auto mt-8"
+                        data-plan-id={{price.id}}
+                        data-stripe-product-id={{product.id}}
+                        data-product-plan="{{product.name}}"
+                        data-plan-duration="{{price.recurring.interval}}"
+                        data-product-price="{{price.unit_amount}}"
+                        data-product-alert="{{product.metadata.alert}}"
+                        data-product-competitor="{{product.metadata.competitor}}"
+                        data-product-count="{{product.metadata.product}}"
+                        data-product-dynamicequation="{{product.metadata.dynamic_equation}}"
+                        >PURCHASE
+                        NOW</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <!-- ending price plan here -->
+        </div>
+        <!-- END: Pricing Layout -->
+        <!-- START: include modal -->
+
+
+    </div>
+    <!-- END: Content -->
+
+
+    <script>
+        function current_plan() {
+            console.log('current_plan call')
+            let baseUrl = window.location.origin;
+            console.log('baseUrl', baseUrl)
+
+            fetch(`${baseUrl}/prices/subcription_plan_details/`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('subcription_plan_details', data)
+                    let planName = data.current_plan.name
+                    let metadata = data.current_plan.metadata
+                    let description = data.current_plan.description
+                    console.log("planName", planName)
+                    console.log("metadata", metadata)
+                    document.getElementById("plan_name").innerText = planName
+                    document.getElementById("description").innerText = description
+
+                    for (const [key, value] of Object.entries(metadata)) {
+                        console.log(key, value);
+                        document.getElementById("plan_specification").innerHTML +=`<span id="product">${value} </span>${key}<span class="mx-1">•</span>`
+                    }
+                })
+                .catch((err) => console.log(err))
+        }
+        current_plan()
+    </script>
+
+
+
+    <script>
+        var purchase_btn = document.getElementsByClassName('purchaseBtn')
+        console.log(purchase_btn)
+        for (var i = 0; i < purchase_btn.length; i++) {
+            purchase_btn[i].addEventListener('click', function () {
+
+                let total_current_alerts;
+                let total_current_dynamic_equation;
+                let total_current_products;
+                let total_max_url;
+                fetch(`${BASE_URL}/get_total_db_stat/{{request.session.m_customer_id}}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('get_total_db_stat', data)
+                        total_current_alerts = data.total_alerts
+                        total_current_dynamic_equation = data.total_pricing_equations
+                        total_current_products = data.total_products
+                        total_max_url = data.max_len_comp_url_list
+                    })
+
+                fetch(`${HOST_BASE_URL}/prices/check-customer-card-information/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        if (data['data']['Success'] == false) {
+                            console.log('payent-card-modal')
+                            $('#payent-card-modal').modal('show');
+                        }
+                        else{
+                              // get the pass value from dataset
+                            var plan = this.dataset.productPlan
+                            var price = this.dataset.productPrice
+                            var id = this.dataset.planId
+                            var stripe_product_id = this.dataset.stripeProductId
+                            var duration = this.dataset.planDuration
+                            var alert = this.dataset.productAlert
+                            var competitor = this.dataset.productCompetitor
+                            var product_count = this.dataset.productCount
+                            var product_dynamicequation = this.dataset.productDynamicequation
+
+                            // var current_alert = `{{request.session.plan_metadata.alert}}`
+                            // var current_competitor = `{{request.session.plan_metadata.product}}`
+                            // var current_product_count = `{{request.session.plan_metadata.product}}`
+
+
+                console.log('tass alert',total_current_alerts)
+                console.log('tass dynamic',total_current_dynamic_equation)
+                console.log('tass product',total_current_products)
+                console.log('tass url',total_max_url)
+
+
+                console.log('plan',plan)
+                console.log('price',price)
+                console.log('id',id)
+                console.log('alert',alert)
+                console.log('competitor',competitor)
+                console.log('product_count',product_count)
+                console.log('product_dynamicequation',product_dynamicequation)
+                // // set the product dataset data in modal
+                document.getElementById('planHolder').innerText = plan
+                document.getElementById('priceHolder').innerText = price.slice(0, -2)
+                document.getElementById('idHolder').innerText = id
+                document.getElementById('durationHolder').innerText = duration
+
+                let plan_com_url;
+
+                if (competitor == "unlimited"){
+                    plan_com_url = 10000;
+                }else{
+                    plan_com_url = competitor
+                }
+
+                // && total_max_url <=competitor
+                if (total_current_alerts <= alert && total_current_products <= product_count && total_current_dynamic_equation <= product_dynamicequation && total_max_url <= plan_com_url) {
+                    // pop up the modal
+                $('#confirm-pricing-modal').modal('show');
+                }else{
+
+                    let delete_alert = total_current_alerts - alert
+                    let delete_dynamic_equation = total_current_dynamic_equation - product_dynamicequation
+                    let delete_product = total_current_products - product_count
+                    let del_product_output
+                    if(delete_product > 0 ){
+                        del_product_output = `${delete_product} products`
+                    }else{
+                        del_product_output = ''
+                    }
+                    let del_alert_output
+                    if(delete_alert > 0){
+                        del_alert_output = `, ${delete_alert} alerts`
+                    }else{
+                        del_alert_output = ''
+                    }
+                    let del_dynamic_equation_output
+                    if(delete_dynamic_equation > 0){
+                        del_dynamic_equation_output = `, ${delete_dynamic_equation} equations`
+                    }else{
+                        del_dynamic_equation_output = ''
+                    }
+
+
+                    let plan_com_url_2;
+
+                    if (competitor == "unlimited"){
+                        plan_com_url_2 = 10000;
+                    }else{
+                        plan_com_url_2 = competitor
+                    }
+
+                    if(total_max_url > plan_com_url_2){
+                        del_url_output = `,competitor url`
+                        message = `And your max limit of competitor ${competitor}`
+                    }else{
+                        del_url_output = ''
+                        message = ''
+                    }
+
+                    document.getElementById('warning-message').innerHTML = `
+                                        <p class="text-lg">
+                    You have already ${total_current_products} products, ${total_current_alerts} alerts and  ${total_current_dynamic_equation} equations.
+                    </p>
+                    <div class="rounded-md flex px-5 py-4 mb-2 mt-2 bg-theme-31 text-theme-6">
+                    <i data-feather="alert-octagon" class="w-10 h-10 mr-2"></i>
+                    Are you sure !! to downgrade your plan? You need to delete ${del_product_output} ${del_alert_output} ${del_dynamic_equation_output} ${del_url_output} to active this plan. ${message}
+                    </div>
+
+                    `
+                    feather.replace()
+                    $('#warning-plan-change-modal').modal('show');
+                }
+
+
+                // $(".close-div").on("click", function (event) {
+                //     $("div[id=del_row]").remove();
+                // });
+
+                $('#stripe_product_id').val(stripe_product_id)
+                $('#stripe_price_id').val(id)
+                $('#stripe_price').val(price)
+                        }
+                    })
+
+            })
+        }
+
+    </script>
+</div>
+</body>
+</html>

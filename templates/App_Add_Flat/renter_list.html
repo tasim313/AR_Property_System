@@ -1,0 +1,76 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}
+    user_list
+{% endblock %}
+{% block css_block %}
+{% endblock %}
+{% block body_block %}
+    <style>
+       .text-center{
+           margin-top: 10px;
+
+
+       }
+
+        .color{
+            background-color: #FFD700
+        }
+        .headfortable{
+            border-radius: 50px;
+        }
+
+        .containerfortable {
+            padding-left: 5%;
+            padding-right: 5%;
+
+        }
+            table {
+              border-collapse: collapse;
+              width: 100%;
+        }
+
+
+         .hover-tr:hover {background-color: #D6EEEE;}
+
+    </style>
+
+    <h2 class="text-center">My All Renters </h2>
+    <br>
+    <div class="table-responsive containerfortable">
+    <table class="table table-borderless">
+        <thead class="color">
+            <tr>
+              <th scope="col">Username</th>
+              <th scope="col">House Number</th>
+              <th scope="col">Flat</th>
+              <th scope="col">Rent</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+
+            </tr>
+        </thead>
+
+        <tbody >
+           {% for renter in user_list %}
+               {% if renter.is_renter %}
+                   <tr class="hover-tr">
+
+                       <td>{{ renter.email }}</td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td><button type="button" class="btn btn-outline-success">Update</button></td>
+                      <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+
+                  </tr>
+               {% else %}
+               {% endif %}
+            {% endfor %}
+
+          </tbody>
+        </table>
+
+    </table>
+    </div>
+{% endblock %}

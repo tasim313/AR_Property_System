@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title_block %}
+    About Us
+{% endblock %}
+
+{% block css_block %}
+    <style>
+
+
+
+    .about-section {
+      padding: 50px;
+      text-align: center;
+      background-color: #474e5d;
+      color: white;
+    }
+
+
+    .img-cover{
+      width: 100%;
+      margin-top: -10px;
+      padding: -40px;
+
+    }
+
+    .custom-media .img {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 300px;
+      flex: 0 0 300px; }
+
+  .custom-media .img img {
+    max-width: 100%;
+    border-radius: 7px; }
+
+    .custom-media .text .meta {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 12px;
+      font-weight: 700; }
+
+
+    </style>
+{% endblock %}
+
+{% block  body_block%}
+     <div class="about-section2">
+        <img src="/media/coverabout1.jpg" alt="" class="img-cover">
+      </div>
+      <div class="about-section">
+            <h1>Our Story</h1>
+
+            <p style="text-align: start">Our journey begins here ,
+              We are the property solutions provider in Bangladesh .
+              We cater to the needs of those seeking real estate services,
+               with a promise to make property search, renting & buying easier
+               than ever. We offer the easiest platform that enables anyone to buy,
+               rent or sell properties in the country. We started in a area , there a
+               landlord who has many house . So, in a huge property there are many flat
+                over 60 to 80 flats. In this scenario , as a one owner its hard and difficult
+                to manages all renters , rents , utility bills , fixing damage property’s , security
+                , taxes and others .  So ,we are property solution provider and that’s why we decided
+                to build a web application  for him to maintain there all problems .
+              </p>
+          </div>
+
+       <h2 style="text-align:center">Our Team</h2>
+        <div class="container mb-5">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="custom-media d-flex">
+              <div class="img mr-4">
+                <img src="/media/arif.1.jpg" alt="Image" class="img-fluid ml-5 ">
+              </div>
+
+              <div class="text ml-5">
+                <p>Md Arif Hossian - Hi dear ,I like to learn something new and like to apply specialized
+                    knowledge,creativity, experience, skill.</p>
+                    <a href="#" class="btn btn-primary">Contact</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="custom-media d-flex">
+              <div class="img mr-4">
+                <img src="/media/rasel1.jpg" alt="Image" class="img-fluid ml-5">
+              </div>
+
+              <div class="text ml-5">
+                <p>Abu Sayed Rasel -Hello,I am happy and grateful .I am good to those which I care about hhhf.
+                    Life is like race.</p>
+                    <a href="#" class="btn btn-primary">Contact</a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+{% endblock %}
